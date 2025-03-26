@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>U1-W3-D3 Form & Events</title>
+    <style>
+        #form-container {
+            width: max-content;
+            margin-inline: auto;
+            margin-top: 5rem;
+        }
+
+        label {
+            display: block;
+        }
+
+        input {
+            width: 400px;
+        }
+
+        form>div {
+            margin-bottom: 1rem;
+        }
+
+        .card {
+            display: inline-block;
+
+            border: 2px solid #bebebe;
+            width: 23.5%
+        }
+
+        .addRed {
+            border-color: red;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="form-container">
+
+        <form>
+            <div>
+                <label for="name">Nome</label>
+                <input id="name" type="text" placeholder="Inserisci il tuo nome" required>
+            </div>
+            <div>
+                <label for="surname">Cognome</label>
+                <input id="surname" type="text" placeholder="Inserisci il tuo cognome" required>
+            </div>
+            <div>
+                <label for="age">Età</label>
+                <input id="age" type="number" placeholder="0" required>
+            </div>
+            <div>
+                <label for="phone">Telefono</label>
+                <input id="phone" type="text" placeholder="Inserisci il tuo numero di telefono" required>
+            </div>
+            <button type="submit">Crea</button>
+            <button type="reset">Reset</button>
+            <!-- se vogliamo creare un'azione custom su un bottone NON DOVRA' avere il type submit o reset, ma button -->
+            <button type="button">Bottone inerte</button>
+        </form>
+
+    </div>
+    <div id="content-area">
+        <!-- <div class="card">
+            <h3>nome + cognome</h3>
+            <h5>età</h5>
+            <p>telefono</p>
+        </div> -->
+
+    </div>
+
+    <script>
+
+        const form = document.querySelector("form")
+
+        form.onsubmit = function (e) {
+            // la prima cosa da fare quando ci agganciamo all'evento submit è:
+            e.preventDefault() // evitiamo il refresh della pagina all'invio del form IMPORTANTISSIMO!
+
+            const nameInput = document.getElementById("name")
+            const surnameInput = document.getElementById("surname")
+            const ageInput = document.getElementById("age")
+            const phoneInput = document.getElementById("phone")
+
+            // genero un elemento a partire dai dati contenuti nel form 
+            const inputData = {
+                name: nameInput.value,
+                surname: surnameInput.value,
+                age: ageInput.value,
+                phone: phoneInput.value
+            }
+            // e lo visualizzo in console 
+            console.log("SUBMIT", inputData)
+            // oltre a visualizzare dei dati in console
+            // posso scegliere di creare nuovi elementi nella pagina a partire da ciò che è contenuto negli input
+
+            // prendo il riferimento al contenitore
+            const contentArea = document.getElementById("content-area")
+
+            // creo un nuovo elemento che chiamerò card
+            const card = document.createElement("div")
+            // gli assegno una classe (al quale il css si collega, vedi sopra)    
+            card.classList.add("card")
+
+            // inserisco gli elementi interni tramite innerHTML
+            card.innerHTML = `<h3>${nameInput.value} ${surnameInput.value}</h3>
+                <h5>${ageInput.value}</h5>
+                <p>${phoneInput.value}</p>`
+
+            // prima di inserire l'elemento nella pagina gli aggancio una funzionalità al click, che si eseguirà se l'utente premerà uno degli elementi creati
+            card.onclick = function (e) {
+                // e.currentTarget.style.borderColor = "red"
+                // e.currentTarget.classList.toggle("addRed")
+                e.currentTarget.remove()
+            }
+
+            // inserisco la card nella pagina dentro a contentArea
+            contentArea.appendChild(card)
+
+            form.reset() // resettiamo il form dopo aver inserito l'elemento
+        }
+
+    </script>
+</body>
+
+</html>
