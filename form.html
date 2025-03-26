@@ -33,6 +33,7 @@
 
         .addRed {
             border-color: red;
+            background-color: #fff0eb;
         }
     </style>
 </head>
@@ -40,6 +41,7 @@
 <body>
     <div id="form-container">
 
+        <!-- usare il required sull'input impedisce ad un evento submit sul form di essere invocato se i campi required sono vuoti o non soddifatti -->
         <form>
             <div>
                 <label for="name">Nome</label>
@@ -65,17 +67,17 @@
 
     </div>
     <div id="content-area">
-        <!-- <div class="card">
-            <h3>nome + cognome</h3>
-            <h5>età</h5>
-            <p>telefono</p>
-        </div> -->
 
     </div>
 
     <script>
 
         const form = document.querySelector("form")
+
+        // form.addEventListener("submit", function(){
+        //          codice della funzione che si scatena al submit (ricorda il preventDefault)
+        // })
+
 
         form.onsubmit = function (e) {
             // la prima cosa da fare quando ci agganciamo all'evento submit è:
@@ -107,15 +109,34 @@
             card.classList.add("card")
 
             // inserisco gli elementi interni tramite innerHTML
-            card.innerHTML = `<h3>${nameInput.value} ${surnameInput.value}</h3>
-                <h5>${ageInput.value}</h5>
-                <p>${phoneInput.value}</p>`
+            // card.innerHTML = `<h3>${nameInput.value} ${surnameInput.value}</h3>
+            //     <h5>${ageInput.value}</h5>
+            //     <p>${phoneInput.value}</p>`
+
+            const h3 = document.createElement("h3")
+            h3.innerText = `${nameInput.value} ${surnameInput.value}`
+
+            const h5 = document.createElement("h5")
+            h5.innerText = ageInput.value
+
+            const p = document.createElement("p")
+            p.innerText = phoneInput.value
+
+            const cardBtn = document.createElement("button")
+            cardBtn.innerText = "Elimina"
+
+            cardBtn.onclick = function (e) {
+                // e.currentTarget.parentNode.remove()
+                e.currentTarget.closest(".card").remove()
+            }
+
+            card.append(h3, h5, p, cardBtn)
 
             // prima di inserire l'elemento nella pagina gli aggancio una funzionalità al click, che si eseguirà se l'utente premerà uno degli elementi creati
             card.onclick = function (e) {
                 // e.currentTarget.style.borderColor = "red"
-                // e.currentTarget.classList.toggle("addRed")
-                e.currentTarget.remove()
+                e.currentTarget.classList.toggle("addRed")
+                // e.currentTarget.remove()
             }
 
             // inserisco la card nella pagina dentro a contentArea
