@@ -125,7 +125,10 @@
             const cardBtn = document.createElement("button")
             cardBtn.innerText = "Elimina"
 
+            // aggancio un evento sul bottone appena generato, così da permettere l'eliminazione dell'intera card se cliccato
             cardBtn.onclick = function (e) {
+                // metodi equivalenti per partire dal e.currentTarget che è il bottone cliccato, e risalire al genitore da eliminare
+
                 // e.currentTarget.parentNode.remove()
                 e.currentTarget.closest(".card").remove()
             }
